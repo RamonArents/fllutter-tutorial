@@ -95,7 +95,30 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Image.asset('assets/images/bg.jpg', height: double.infinity, fit:BoxFit.cover),
+      body: Wrap(children: [
+        Text('Hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'),
+        Text('Hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'),
+        Text('Hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'),
+        Text('Hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'),
+        Text('Hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'),
+      ],),
+      // Container(
+      //   child: Stack(
+      //     children: [
+      //       //Image.asset('assets/images/bg.jpg', fit: BoxFit.cover, height: 300),
+      //       SizedBox(height: 300, child: Center(child: Text('Flutter'))),
+      //       ListTile(
+      //         title: Text('Hoi'),
+      //         tileColor: Colors.red,
+      //         leading: Icon(Icons.join_full),
+      //         trailing: Text('wereld'),
+      //         onTap: () => {
+      //           print('Clicked!!!!') //Logs to debug console
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       // body: Center(
       //   // Center is a layout widget. It takes a single child and positions it
       //   // in the middle of the parent.
@@ -104,8 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
       //     child: Row(
       //       //main axis horizontal. For columns this vertical
       //       //You can give arguments as it is done in css flexbox
-      //       //mainAxisAlignment: MainAxisAlignment.end, //Vertical alignment (start, center, end. Depends on height of container)
-      //       //crossAxisAlignment: CrossAxisAlignment.start,  //Horizontal alignment  (start, center, end. Depends on width of container)
+      //       mainAxisAlignment: MainAxisAlignment.end, //Vertical alignment (start, center, end. Depends on height of container)
+      //       crossAxisAlignment: CrossAxisAlignment.start,  //Horizontal alignment  (start, center, end. Depends on width of container)
       //       mainAxisSize: MainAxisSize.min,
       //       children: [
       //         Container(
