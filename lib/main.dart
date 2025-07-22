@@ -4,9 +4,19 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+//statefull can refresh
+//stateless can't refresh
+//setstate to refresh
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,16 +28,21 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Flutter Mapp'), centerTitle: true),
-        bottomNavigationBar: NavigationBar(
-          destinations: [
-            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-          ],
-          onDestinationSelected: (int value) => {},
-          selectedIndex: 0,
+        appBar: AppBar(
+          title: Text('Flutter Mapp'),
+          centerTitle: true,
         ),
-      ),
+        bottomNavigationBar: NavigationBar(destinations: [
+          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(icon: Icon(Icons.person), label: 'Profile')
+        ],
+        onDestinationSelected: (int value) {
+          setState(() {
+              selectedIndex = value;      
+          });
+        } ,
+        selectedIndex: selectedIndex,),
+      )
     );
   }
 }
