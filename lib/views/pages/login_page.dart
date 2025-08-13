@@ -12,13 +12,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   TextEditingController controller = TextEditingController();
-
-  @override
-  void initState() {
-    //Same as g_init. Runs on start
-    print('initState');
-    super.initState();
-  }
   
   @override
   void dispose() {
