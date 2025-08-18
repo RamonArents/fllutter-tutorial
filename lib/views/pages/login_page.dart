@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/views/widget_tree.dart';
-import 'package:flutter_tutorial/views/widgets/hero_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -37,8 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                HeroWidget(title: widget.title),
-                SizedBox(height: 20.0),
+                Lottie.asset('assets/lotties/welcome.json', height: 400.0),
                 TextField(
                   controller: controllerEm,
                   decoration: InputDecoration(
@@ -65,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
                 SizedBox(height: 20.0),
-                ElevatedButton(
+                FilledButton(
                   onPressed: () {
                     onLoginPressed();
                   },
@@ -86,13 +85,14 @@ class _LoginPageState extends State<LoginPage> {
   void onLoginPressed() {
     if (confirmedEmail == controllerEm.text &&
         confirmedPassword == controllerPw.text) {
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) {
             return WidgetTree();
           },
         ),
+        (route) => false,
       );
     }
   }

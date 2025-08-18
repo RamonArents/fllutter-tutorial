@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/data/constants.dart';
 import 'package:flutter_tutorial/data/notifiers.dart';
 import 'package:flutter_tutorial/views/pages/home_page.dart';
 import 'package:flutter_tutorial/views/pages/settings_page.dart';
 import 'package:flutter_tutorial/views/widgets/navbar_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'pages/profile_page.dart';
 
@@ -19,8 +21,12 @@ class WidgetTree extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               isDarkModeNotifier.value = !isDarkModeNotifier.value;
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
+                  await prefs.setBool(KConstans.themeModeKey, isDarkModeNotifier.value);
+
             },
             icon: ValueListenableBuilder(
               valueListenable: isDarkModeNotifier,
@@ -35,7 +41,7 @@ class WidgetTree extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SettingsPage(title: 'Settings',);
+                    return SettingsPage(title: 'Settings');
                   },
                 ),
               );
