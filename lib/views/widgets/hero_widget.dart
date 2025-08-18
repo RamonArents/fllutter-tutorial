@@ -7,32 +7,34 @@ class HeroWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Hero(
-          tag: 'hero1',
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image.asset(
-              'assets/images/bg.jpg',
-              color: Colors.teal,
-              colorBlendMode: BlendMode.darken,
+    return GestureDetector(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Hero(
+            tag: 'hero1',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: Image.asset(
+                'assets/images/bg.jpg',
+                color: Colors.teal,
+                colorBlendMode: BlendMode.darken,
+              ),
             ),
           ),
-        ),
-        FittedBox(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 50.0,
-              letterSpacing: 10.0,
-              color: Colors.white60
+          FittedBox(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 50.0,
+                letterSpacing: 10.0,
+                color: Colors.white60
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

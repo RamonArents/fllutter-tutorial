@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/data/constants.dart';
+import 'package:flutter_tutorial/views/pages/login_page.dart';
 import 'package:lottie/lottie.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -15,17 +17,29 @@ class OnboardingPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Lottie.asset('assets/lotties/welcome.json', height: 400.0),
+                Lottie.asset('assets/lotties/hi.json', height: 400.0),
 
+                Text(
+                  'Flutter Mapp is the way to learn Flutter, period.',
+                  style: KTextStyle.descriptionText,
+                  textAlign: TextAlign.justify,
+                ),
                 SizedBox(height: 20.0),
                 FilledButton(
                   onPressed: () {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return LoginPage(title: 'Register');
+                        },
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(double.infinity, 40),
                   ),
-                  child: Text('default'),
+                  child: Text('Next'),
                 ),
                 SizedBox(height: 50.0),
               ],
