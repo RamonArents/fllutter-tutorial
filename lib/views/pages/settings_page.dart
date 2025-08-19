@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/views/pages/expaned_flexible_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key, required this.title});
@@ -44,10 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
                 child: Text('Open Snackbar'),
               ),
-              Divider(
-                color: Colors.teal,
-                thickness: 5.0,      
-              ),
+              Divider(color: Colors.teal, thickness: 5.0),
               ElevatedButton(
                 onPressed: () {
                   showDialog(
@@ -150,12 +148,21 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ExpanedFlexiblePage();
+                      },
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal,
                   foregroundColor: Colors.white,
                 ),
-                child: Text('Click me'),
+                child: Text('Show Flexible and Expanded'),
               ),
               FilledButton(onPressed: () {}, child: Text('Click me')),
               TextButton(onPressed: () {}, child: Text('Click me')),
