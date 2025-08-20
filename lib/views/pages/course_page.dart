@@ -1,7 +1,7 @@
-import 'dart:convert' as convert;
-import 'dart:developer';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/data/classes/activity_class.dart';
 import 'package:flutter_tutorial/data/constants.dart';
 import 'package:flutter_tutorial/views/widgets/hero_widget.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +14,6 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
-  String data = 'No data to display.';
 
   @override
   void initState() {
@@ -22,39 +21,43 @@ class _CoursePageState extends State<CoursePage> {
     super.initState();
   }
 
-  void getData() async {
-    var url =
-      Uri.https('bored-api.appbrewery.com', '/random');
+  Future getData() async {
+    //Use future with async
+    var url = Uri.https('bored-api.appbrewery.com', '/random');
 
-  var response = await http.get(url);
-  if (response.statusCode == 200) {
-    var jsonResponse =
-        convert.jsonDecode(response.body) as Map<String, dynamic>;
-    var activity = jsonResponse['activity'];
-      data = activity;
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return Activity.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
     } else {
-      log('Request failed with status: ${response.statusCode}.');
-    } 
+      throw Exception('Failed to load album');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              HeroWidget(title: 'Course',),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(data, style: KTextStyle.descriptionText,  ),
+      body: FutureBuilder(
+        // Use future builde with async
+        future: getData(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); //Loading data
+          }
+          if (snapshot.hasData) {
+            Activity activity = snapshot.data;
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: SingleChildScrollView(
+                child: Column(children: [HeroWidget(title: activity.activity)]),
               ),
-            ],
-          ),
-        ),
+            );
+          } else {
+            return Center(child: Text('Error'),);
+          }
+        },
       ),
     );
   }
