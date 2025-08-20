@@ -1,6 +1,8 @@
 import 'dart:convert' as convert;
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/data/constants.dart';
 import 'package:flutter_tutorial/views/widgets/hero_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +14,8 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
+  String data = 'No data to display.';
+
   @override
   void initState() {
     getData();
@@ -26,11 +30,11 @@ class _CoursePageState extends State<CoursePage> {
   if (response.statusCode == 200) {
     var jsonResponse =
         convert.jsonDecode(response.body) as Map<String, dynamic>;
-    var itemCount = jsonResponse['activity'];
-    print('Reponse API: $itemCount.');
-  } else {
-    print('Request failed with status: ${response.statusCode}.');
-  }  
+    var activity = jsonResponse['activity'];
+      data = activity;
+    } else {
+      log('Request failed with status: ${response.statusCode}.');
+    } 
   }
 
   @override
@@ -44,6 +48,10 @@ class _CoursePageState extends State<CoursePage> {
           child: Column(
             children: [
               HeroWidget(title: 'Course',),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(data, style: KTextStyle.descriptionText,  ),
+              ),
             ],
           ),
         ),
