@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/data/classes/activity_class.dart';
-import 'package:flutter_tutorial/data/constants.dart';
 import 'package:flutter_tutorial/views/widgets/hero_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +13,6 @@ class CoursePage extends StatefulWidget {
 }
 
 class _CoursePageState extends State<CoursePage> {
-
   @override
   void initState() {
     getData();
@@ -51,11 +49,16 @@ class _CoursePageState extends State<CoursePage> {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: SingleChildScrollView(
-                child: Column(children: [HeroWidget(title: activity.activity)]),
+                child: Column(
+                  children: [
+                    HeroWidget(title: activity.activity),
+                    Text(activity.activity),
+                  ],
+                ),
               ),
             );
           } else {
-            return Center(child: Text('Error'),);
+            return Center(child: Text('Error'));
           }
         },
       ),
