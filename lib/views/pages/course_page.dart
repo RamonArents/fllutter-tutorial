@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/data/classes/activity_class.dart';
 import 'package:http/http.dart' as http;
 
-
 Future<Activity> fetchActivity() async {
-  final response =
-      await http.get(Uri.parse('https://bored-api.appbrewery.com/random'));
+  final response = await http.get(
+    Uri.parse('https://bored-api.appbrewery.com/random'),
+  );
 
   if (response.statusCode == 200) {
     final jsonData = jsonDecode(response.body);
@@ -25,6 +25,7 @@ class CoursePage extends StatefulWidget {
 
 class _CoursePageState extends State<CoursePage> {
   late Future<Activity> futureActivity;
+  bool isFirst = true;
 
   @override
   void initState() {
@@ -43,6 +44,16 @@ class _CoursePageState extends State<CoursePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bored API Activity'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isFirst = !isFirst;
+              });
+            },
+            icon: Icon(Icons.switch_access_shortcut),
+          ),
+        ],
       ),
       body: Center(
         child: FutureBuilder<Activity>(
@@ -62,38 +73,50 @@ class _CoursePageState extends State<CoursePage> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        activity.activity,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 12),
-                      Text("Type: ${activity.type}"),
-                      Text("Participants: ${activity.participants}"),
-                      Text("Kid Friendly: ${activity.kidFriendly ? "Yes" : "No"}"),
-                      Text("Duration: ${activity.duration}"),
-                      if (activity.link.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            "More info: ${activity.link}",
-                            style: const TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline),
+                  child: AnimatedCrossFade(
+                    firstChild: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          activity.activity,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: _reloadActivity,
-                        child: const Text("Get Another Activity"),
-                      ),
-                    ],
+                        const SizedBox(height: 12),
+                        Text("Type: ${activity.type}"),
+                        Text("Participants: ${activity.participants}"),
+                        Text(
+                          "Kid Friendly: ${activity.kidFriendly ? "Yes" : "No"}",
+                        ),
+                        Text("Duration: ${activity.duration}"),
+                        if (activity.link.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              "More info: ${activity.link}",
+                              style: const TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _reloadActivity,
+                          child: const Text("Get Another Activity"),
+                        ),
+                      ],
+                    ),
+                    secondChild: Center(
+                      child: Image.asset('assets/images/bg.jpg'),
+                    ),
+                    crossFadeState: isFirst
+                        ? CrossFadeState.showFirst
+                        : CrossFadeState.showSecond,
+                    duration: Duration(microseconds: 1000),
                   ),
                 ),
               );
